@@ -1,0 +1,48 @@
+sudo: false
+language: python
+
+python: "3.6"
+
+env:
+  - TOXENV=py27-django15
+  - TOXENV=py27-django110
+  - TOXENV=py27-django111
+  - TOXENV=py34-django15
+  - TOXENV=py34-django110
+  - TOXENV=py34-django111
+  - TOXENV=py34-djangomaster
+  - TOXENV=py35-django15
+  - TOXENV=py35-django110
+  - TOXENV=py35-django111
+  - TOXENV=py35-djangomaster
+  - TOXENV=py36-django15
+  - TOXENV=py36-django110
+  - TOXENV=py36-django111
+  - TOXENV=py36-djangomaster
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: TOXENV=py34-djangomaster
+    - env: TOXENV=py35-djangomaster
+    - env: TOXENV=py36-djangomaster
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $TRAVIS_BUILD_DIR/.tox
+
+install:
+  - pip install --upgrade pip wheel setuptools
+  - pip install codecov coverage tox
+
+script:
+  - tox
+
+after_success:
+  - coverage xml -i
+  - codecov
+
+branches:
+  only:
+    master

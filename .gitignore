@@ -1,0 +1,8 @@
+*.sqlite3
+*.pyc
+.idea/
+/doc/_build/
+.tox/
+.coverage
+django_abscrete.egg-info/
+dist/
